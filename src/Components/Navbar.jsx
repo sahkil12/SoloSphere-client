@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import useAuth from "../Auth/useAuth";
 
 const Navbar = () => {
-    const { user } = useAuth()
+    const { user, logoutUser } = useAuth()
     return (
         <div className='navbar bg-base-200 py-5 shadow-md px-4'>
             <div className='flex-1'>
@@ -18,17 +18,17 @@ const Navbar = () => {
                         role='button'
                         className='btn btn-ghost btn-circle avatar'
                     >
-                        <div className='w-10 rounded-full' title=''>
+                        <div title={user.displayName} className='w-10 rounded-full'>
                             <img
                                 referrerPolicy='no-referrer'
-                                alt='User Profile Photo'
-                                src=''
+                                alt='user profile'
+                                src={user.photoURL}
                             />
                         </div>
                     </div>
                     <ul
                         tabIndex={0}
-                        className='menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52'
+                        className='menu menu-md dropdown-content mt-3 z-1 p-3 shadow bg-base-200 rounded-box w-64 border-2 border-neutral-200 space-y-2'
                     >
                         <li>
                             <div className='justify-between'>Add Job</div>
@@ -43,17 +43,17 @@ const Navbar = () => {
                             <div>Bid Requests</div>
                         </li>
                         <li className='mt-2'>
-                            <button className='bg-gray-200 block text-center'>Logout</button>
+                            <button onClick={logoutUser} className=' block text-center btn btn-primary text-base'>Logout</button>
                         </li>
                     </ul>
                 </div> : 
-                <ul className='menu menu-horizontal px-1'>
+                <ul className='menu menu-horizontal px-1 text-base font-semibold flex items-center'>
                     <li>
                        <Link to={'/'}>Home</Link>
                     </li>
 
                     <li>
-                        <Link to={'/login'}>Login</Link>
+                        <Link to={'/login'} className="btn ml-3 btn-primary px-6 text-base">Login</Link>
                     </li>
                 </ul>
                 }
