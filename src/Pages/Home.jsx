@@ -1,8 +1,9 @@
+import Slider from "../Components/Slider";
 
 const Home = () => {
     return (
-        <div>
-            
+        <div className="py-10">
+            <Slider></Slider>
         </div>
     );
 };

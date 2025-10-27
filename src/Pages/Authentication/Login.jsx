@@ -14,7 +14,6 @@ const Login = () => {
         const form = e.target
         const email = form.email.value;
         const password = form.password.value;
-        console.log(email, password);
         // register user 
         loginUser(email, password)
             .then(result => {
@@ -40,13 +39,14 @@ const Login = () => {
     return (
         <div className='flex justify-center items-center py-20'>
             <div className='flex w-full max-w-md mx-auto overflow-hidden bg-white rounded-lg shadow-lg lg:max-w-5xl border-2 p-2 border-neutral-300'>
+                {/* image section */}
                 <div
-                    className='hidden bg-cover bg-center lg:block lg:w-1/2'
+                    className='hidden rounded-md bg-cover bg-center lg:block lg:w-1/2'
                     style={{
                         backgroundImage: `url(${bgImg})`,
                     }}
                 ></div>
-
+    {/* logo */}
                 <div className='w-full px-6 py-8 md:px-8 lg:w-1/2'>
                     <div className='flex justify-center mx-auto'>
                         <img
@@ -55,14 +55,13 @@ const Login = () => {
                             alt=''
                         />
                     </div>
-
-                    <p className='mt-3 text-xl text-center text-gray-600 '>
-                        Welcome back to <span className="font-semibold">SoloSphere</span>
+                    {/* login form title */}
+                    <p className='mt-3 text-xl text-center text-gray-600 font-semibold'>
+                        Welcome back to <span className="text-gray-700">SoloSphere</span>
                     </p>
-
+                    {/*  */}
                     <p className="text-center my-4 pb-6 font-medium text-gray-700">Don't Have an Account? <Link to={'/register'} className="font-semibold text-blue-500">Register</Link> Here</p>
-
-
+                    {/* google login */}
                     <div onClick={googleLogin} className='flex cursor-pointer items-center justify-center mt-4 text-gray-600 transition-colors duration-300 transform border rounded-lg   hover:bg-gray-200 '>
                         <div className='px-4 py-2'>
                             <FcGoogle size={20}></FcGoogle>
@@ -79,9 +78,10 @@ const Login = () => {
                         <div className='text-xs text-center text-gray-500 uppercase  hover:underline'>
                             or login with email
                         </div>
-
+                        {/* border line */}
                         <span className='w-1/5 border-b dark:border-gray-400 lg:w-1/4'></span>
                     </div>
+                    {/* login form */}
                     <form onSubmit={handleSubmit}>
                         <div className='mt-4'>
                             <label
