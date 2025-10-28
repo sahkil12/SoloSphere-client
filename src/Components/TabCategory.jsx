@@ -16,7 +16,7 @@ const TabCategory = ({ jobs }) => {
                 </p>
                 <TabList>
                     <div className='flex  items-center justify-center'>
-                        <Tab>Web Developer</Tab>
+                        <Tab>Web Development</Tab>
                         <Tab>Graphics Design</Tab>
                         <Tab>Digital Marketing</Tab>
                     </div>
@@ -24,7 +24,7 @@ const TabCategory = ({ jobs }) => {
                 <TabPanel>
                     <div className='grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 py-6'>
                         {
-                            jobs.filter(j => j.category.toLowerCase() === "web developer").map((job) => (<JobCard key={job._id} job={job}></JobCard>))
+                            jobs.filter(j => j.category.toLowerCase() === "web development").map((job) => (<JobCard key={job._id} job={job}></JobCard>))
                         }
                     </div>
                 </TabPanel>

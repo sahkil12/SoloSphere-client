@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 const JobCard = ({ job }) => {
     const {
         _id,
-        job_title,
+        title,
         description,
         min_price,
         max_price,
@@ -26,7 +26,7 @@ const JobCard = ({ job }) => {
             </div>
             <div>
                 <h1 className='mt-2 text-lg font-semibold text-gray-800 '>
-                    {job_title}
+                    {title}
                 </h1>
 
                 <p title={description} className='mt-2 text-sm text-gray-600 '>
