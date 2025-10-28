@@ -31,16 +31,16 @@ const Navbar = () => {
                         className='menu menu-md dropdown-content mt-3 z-1 p-3 shadow bg-base-200 rounded-box w-64 border-2 border-neutral-200 space-y-2'
                     >
                         <li>
-                            <div className='justify-between'>Add Job</div>
+                            <Link to={'/addJobs'}>Add Job</Link>
                         </li>
                         <li>
-                            <div>My Posted Jobs</div>
+                              <Link to={'/myPostedJob'}>My Posted Jobs</Link>
                         </li>
                         <li>
-                            <div>My Bids</div>
+                              <Link to={'/myBids'}>My Bids</Link>
                         </li>
                         <li>
-                            <div>Bid Requests</div>
+                              <Link to={'/bidRequest'}>Bid Requests</Link>
                         </li>
                         <li className='mt-2'>
                             <button onClick={logoutUser} className=' block text-center btn btn-primary text-base'>Logout</button>
