@@ -5,7 +5,7 @@ const SlideBanner = ({img, title, subtitle}) => {
         <div>
             <header className="bg-white dark:bg-gray-900">
 
-    <div className="container px-6 py-12 md:py-16 mx-auto">
+    <div className="container px-6 py-12 md:py-18 mx-auto">
         <div className="items-center lg:flex gap-5 space-y-10">
             <div className="w-full lg:w-1/2">
                 <div className="lg:max-w-lg space-y-5">
@@ -19,7 +19,7 @@ const SlideBanner = ({img, title, subtitle}) => {
             </div>
 {/* img */}
             <div className="flex items-center justify-center w-full mt-6 lg:mt-0 lg:w-1/2">
-                <img className="w-full h-80 lg:h-[440px] rounded-md lg:max-w-3xl" src={img} alt="Catalogue-pana.svg"/>
+                <img className="w-full h-80 lg:h-[470px] rounded-md lg:max-w-3xl" src={img} alt="Catalogue-pana.svg"/>
             </div>
         </div>
     </div>

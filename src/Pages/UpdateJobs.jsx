@@ -37,7 +37,6 @@ const UpdateJobs = () => {
                 toast.success('Update Your Data Successfully')
                 navigate('/myPostedJobs')
             }
-            console.log(data);
         }
         catch (error) {
             toast.error(error.message);

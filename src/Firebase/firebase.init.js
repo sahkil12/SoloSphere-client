@@ -4,12 +4,12 @@ import { getAuth } from "firebase/auth";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyBJkyhMLIOzIToc4qCTxOA0m1ZBpq_EBOw",
-  authDomain: "solosphere-8a250.firebaseapp.com",
-  projectId: "solosphere-8a250",
-  storageBucket: "solosphere-8a250.firebasestorage.app",
-  messagingSenderId: "326259798133",
-  appId: "1:326259798133:web:ccd617235be45a7bba883c"
+  apiKey: import.meta.env.VITE_apiKey,
+  authDomain: import.meta.env.VITE_authDomain,
+  projectId: import.meta.env.VITE_projectId,
+  storageBucket: import.meta.env.VITE_storageBucket,
+  messagingSenderId: import.meta.env.VITE_messagingSenderId,
+  appId: import.meta.env.VITE_appId
 };
 
 // Initialize Firebase

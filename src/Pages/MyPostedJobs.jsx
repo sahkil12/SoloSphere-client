@@ -40,10 +40,8 @@ const MyPostedJobs = () => {
                     }
                 }
             });
-
         }
         catch (error) {
-            console.log(error);
             toast.error(error.message)
         }
     }
@@ -64,10 +62,10 @@ const MyPostedJobs = () => {
                         <div className='overflow-hidden border border-gray-400 md:rounded-lg'>
                             <table className='min-w-full divide-y divide-gray-200'>
                                 <thead className='bg-gray-100'>
-                                    <tr>
+                                    <tr className=''>
                                         <th
                                             scope='col'
-                                            className='py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500'
+                                            className='py-3.5 px-4 text-base font-bold text-left rtl:text-right text-gray-500'
                                         >
                                             <div className='flex items-center gap-x-3'>
                                                 <span>Title</span>
@@ -76,14 +74,14 @@ const MyPostedJobs = () => {
 
                                         <th
                                             scope='col'
-                                            className='px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500'
+                                            className='px-4 py-3.5 text-base font-bold text-left rtl:text-right text-gray-500'
                                         >
                                             <span>Deadline</span>
                                         </th>
 
                                         <th
                                             scope='col'
-                                            className='px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500'
+                                            className='px-4 py-3.5 text-base font-bold text-left rtl:text-right text-gray-500'
                                         >
                                             <button className='flex items-center gap-x-2'>
                                                 <span>Price Range</span>
@@ -92,19 +90,19 @@ const MyPostedJobs = () => {
 
                                         <th
                                             scope='col'
-                                            className='px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500'
+                                            className='px-4 py-3.5 text-base font-bold text-left rtl:text-right text-gray-500'
                                         >
                                             Category
                                         </th>
                                         <th
                                             scope='col'
-                                            className='px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500'
+                                            className='px-4 py-3.5 text-base font-bold text-left rtl:text-right text-gray-500'
                                         >
                                             Description
                                         </th>
 
-                                        <th className='px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500'>
-                                            Edit
+                                        <th className='px-4 py-3.5 text-base font-bold text-left rtl:text-right text-gray-500'>
+                                            Action
                                         </th>
                                     </tr>
                                 </thead>

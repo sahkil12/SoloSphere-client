@@ -17,13 +17,15 @@ const Login = () => {
         // register user 
         loginUser(email, password)
             .then(result => {
-                console.log(result)
-                toast.success('You Successfully login to SoloSphere')
-                navigate('/')
+                if (result) {
+                    toast.success('You Successfully login to SoloSphere')
+                    navigate('/')
+                }
             })
             .catch(error => {
-                console.log(error);
-                toast.error('Something is wrong pls try again!')
+               if(error){
+                 toast.error('Something is wrong pls try again!')
+               }
             })
     }
     // google login
@@ -46,7 +48,7 @@ const Login = () => {
                         backgroundImage: `url(${bgImg})`,
                     }}
                 ></div>
-    {/* logo */}
+                {/* logo */}
                 <div className='w-full px-6 py-8 md:px-8 lg:w-1/2'>
                     <div className='flex justify-center mx-auto'>
                         <img

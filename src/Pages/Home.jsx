@@ -4,7 +4,6 @@ import TabCategory from "../Components/TabCategory";
 
 const Home = () => {
     const jobs = useLoaderData()
-    console.log(jobs);
     return (
         <div className="py-5 space-y-10">
             <Slider></Slider>

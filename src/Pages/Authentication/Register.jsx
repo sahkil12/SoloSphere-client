@@ -18,7 +18,6 @@ const Register = () => {
         // register user 
         registerUser(email, password)
             .then(result => {
-                console.log(result)
                 if (result?.user) {
                     updateUser({
                         displayName: name,
@@ -29,12 +28,12 @@ const Register = () => {
                             navigate("/");
                         })
                         .catch((error) => {
-                            console.log("Error updating user profile:", error);
+                            toast.error("Error updating user profile:", error.message);
                         });
                 }
             })
             .catch(error => {
-                console.log(error);
+                toast.error(error.message)
             })
     }
     // google register
