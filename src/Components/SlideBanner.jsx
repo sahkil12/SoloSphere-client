@@ -19,7 +19,7 @@ const SlideBanner = ({img, title, subtitle}) => {
             </div>
 {/* img */}
             <div className="flex items-center justify-center w-full mt-6 lg:mt-0 lg:w-1/2">
-                <img className="w-full h-80 lg:h-[470px] rounded-md lg:max-w-3xl" src={img} alt="Catalogue-pana.svg"/>
+                <img className="w-full object-cover h-80 lg:h-[500px] rounded-md lg:max-w-3xl" src={img} alt={title}/>
             </div>
         </div>
     </div>

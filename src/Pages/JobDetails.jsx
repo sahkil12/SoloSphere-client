@@ -44,7 +44,7 @@ const JobDetails = () => {
     return (
         <div className='flex flex-col md:flex-row justify-around gap-5  items-center min-h-[calc(100vh-306px)] md:max-w-screen-xl mx-auto py-10'>
             {/* Job Details */}
-            <div className='flex-1 px-4 py-6 bg-white rounded-md shadow-md md:min-h-[350px] border border-neutral-300'>
+            <div className='flex-1 p-6 bg-white rounded-md shadow-md md:min-h-[350px] border border-neutral-300'>
                 <div className='flex items-center justify-between'>
                     <span className='text-sm font-light text-gray-800 '>
                         Deadline: {new Date(job.deadline).toLocaleDateString()}
@@ -58,10 +58,10 @@ const JobDetails = () => {
                         {job.title}
                     </h1>
 
-                    <p className='my-3 text-base/relaxed text-gray-600 '>
+                    <p className='mt-4 text-base/relaxed text-gray-600 '>
                         {job.description}
                     </p>
-                    <p className='mt-6 text-sm font-bold text-gray-600 '>
+                    <p className='mt-4 text-sm font-bold text-gray-600 '>
                         Buyer Details:
                     </p>
                     <div className='flex items-center gap-5'>
@@ -75,13 +75,13 @@ const JobDetails = () => {
                             <img src={job.buyer.photo} alt='' />
                         </div>
                     </div>
-                    <p className='mt-6 text-lg font-bold text-gray-600 '>
+                    <p className='mt-3 text-lg font-bold text-gray-600 '>
                         Range: ${job.min_price} - ${job.max_price}
                     </p>
                 </div>
             </div>
             {/* Place A Bid Form */}
-            <section className='p-6 w-full  bg-white rounded-md shadow-md flex-1 md:min-h-[350px] border border-neutral-300'>
+            <section className='p-7 w-full bg-white rounded-md shadow-md flex-1 md:min-h-[350px] border border-neutral-300'>
                 <h2 className='text-lg font-semibold text-gray-700 capitalize '>
                     Place A Bid
                 </h2>

@@ -1,5 +1,5 @@
 import { FcGoogle } from "react-icons/fc";
-import { Link, useNavigate } from "react-router-dom"
+import { Link, useLocation, useNavigate } from "react-router-dom"
 import bgImg from "../../assets/images/login.jpg"
 import useAuth from "../../Auth/useAuth";
 import toast from "react-hot-toast";
@@ -8,6 +8,8 @@ const Login = () => {
 
     const { loginUser, googleUser } = useAuth()
     const navigate = useNavigate()
+    const location = useLocation()
+    const from = location.state || '/'
     // register account
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -19,7 +21,7 @@ const Login = () => {
             .then(result => {
                 if (result) {
                     toast.success('You Successfully login to SoloSphere')
-                    navigate('/')
+                    navigate(from, {replace:true})
                 }
             })
             .catch(error => {
@@ -33,7 +35,7 @@ const Login = () => {
         try {
             await googleUser()
             toast.success("You Successfully login to SoloSphere")
-            navigate('/')
+            navigate(from, {replace: true})
         } catch (error) {
             toast.error(error?.message)
         }

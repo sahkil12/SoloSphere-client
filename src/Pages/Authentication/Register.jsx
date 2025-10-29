@@ -1,5 +1,5 @@
 import { FcGoogle } from "react-icons/fc";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import bgImg from "../../assets/images/register.jpg"
 import useAuth from "../../Auth/useAuth";
 import toast from "react-hot-toast";
@@ -7,6 +7,8 @@ import toast from "react-hot-toast";
 const Register = () => {
     const { registerUser, googleUser, updateUser } = useAuth()
     const navigate = useNavigate()
+    const location = useLocation()
+    const from = location.state || '/'
     // register account
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -23,9 +25,9 @@ const Register = () => {
                         displayName: name,
                         photoURL: photo
                     })
-                    .then(() => {
-                        toast.success("Your account was created successfully");
-                            navigate("/");
+                        .then(() => {
+                            toast.success("Your account was created successfully");
+                            navigate(from, {replace:true})
                         })
                         .catch((error) => {
                             toast.error("Error updating user profile:", error.message);
@@ -41,7 +43,7 @@ const Register = () => {
         try {
             await googleUser()
             toast.success("Your Account Create Successfully")
-            navigate('/')
+            navigate(from, {replace:true})
         } catch (error) {
             toast.error(error?.message)
         }
