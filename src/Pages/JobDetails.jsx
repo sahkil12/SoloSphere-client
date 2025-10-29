@@ -25,10 +25,12 @@ const JobDetails = () => {
         const comment = e.target.comment.value;
         const deadline = startDate;
         const status = 'pending'
+        const category = job.category
+        const title = job.title
         const jobId = job._id
         const buyer_email = job.buyer.email
         const bidData = {
-            jobId, price, email, deadline, comment, status, buyer_email
+            jobId, price, email, deadline, comment, status, buyer_email, category, title
         }
         // bid post
         try {

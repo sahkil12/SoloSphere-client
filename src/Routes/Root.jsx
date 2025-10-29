@@ -10,6 +10,7 @@ import MyPostedJobs from "../Pages/MyPostedJobs";
 import UpdateJobs from "../Pages/UpdateJobs";
 import Loader from "../Components/Loader";
 import PrivateRoute from "./PrivateRoute";
+import MyBids from "../Pages/MyBids";
 
 export const router = createBrowserRouter([
     {
@@ -50,6 +51,10 @@ export const router = createBrowserRouter([
                 loader: ({ params }) => fetch(`${import.meta.env.VITE_API_URL}/job/${params.id}`),
                 element: <UpdateJobs></UpdateJobs>,
                 hydrateFallbackElement:<Loader></Loader>
+            },
+            {
+                path:'myBids',
+                element:<PrivateRoute><MyBids></MyBids></PrivateRoute>
             }
         ]
     },

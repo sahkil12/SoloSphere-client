@@ -61,7 +61,7 @@ const MyPostedJobs = () => {
                     <div className='inline-block min-w-full py-2 align-middle md:px-6 lg:px-8'>
                         <div className='overflow-hidden border border-gray-400 md:rounded-lg'>
                             <table className='min-w-full divide-y divide-gray-200'>
-                                <thead className='bg-gray-100'>
+                                <thead className='bg-gray-200'>
                                     <tr className=''>
                                         <th
                                             scope='col'

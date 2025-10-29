@@ -3,13 +3,20 @@ import { Link, useLocation, useNavigate } from "react-router-dom"
 import bgImg from "../../assets/images/login.jpg"
 import useAuth from "../../Auth/useAuth";
 import toast from "react-hot-toast";
+import { useEffect } from "react";
+import Loader from "../../Components/Loader";
 
 const Login = () => {
 
-    const { loginUser, googleUser } = useAuth()
+    const { loginUser, googleUser, user, loading } = useAuth()
     const navigate = useNavigate()
     const location = useLocation()
     const from = location.state || '/'
+    useEffect(() => {
+        if (user) {
+            navigate('/')
+        }
+    }, [user, navigate])
     // register account
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -21,13 +28,13 @@ const Login = () => {
             .then(result => {
                 if (result) {
                     toast.success('You Successfully login to SoloSphere')
-                    navigate(from, {replace:true})
+                    navigate(from, { replace: true })
                 }
             })
             .catch(error => {
-               if(error){
-                 toast.error('Something is wrong pls try again!')
-               }
+                if (error) {
+                    toast.error('Something is wrong pls try again!')
+                }
             })
     }
     // google login
@@ -35,11 +42,12 @@ const Login = () => {
         try {
             await googleUser()
             toast.success("You Successfully login to SoloSphere")
-            navigate(from, {replace: true})
+            navigate(from, { replace: true })
         } catch (error) {
             toast.error(error?.message)
         }
     }
+    if(user || loading)return 
     return (
         <div className='flex justify-center items-center py-20'>
             <div className='flex w-full max-w-md mx-auto overflow-hidden bg-white rounded-lg shadow-lg lg:max-w-5xl border-2 p-2 border-neutral-300'>

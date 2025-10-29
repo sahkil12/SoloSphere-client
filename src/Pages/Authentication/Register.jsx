@@ -3,12 +3,18 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import bgImg from "../../assets/images/register.jpg"
 import useAuth from "../../Auth/useAuth";
 import toast from "react-hot-toast";
+import { useEffect } from "react";
 
 const Register = () => {
-    const { registerUser, googleUser, updateUser } = useAuth()
+    const { registerUser, googleUser, updateUser, user, loading } = useAuth()
     const navigate = useNavigate()
     const location = useLocation()
     const from = location.state || '/'
+    useEffect(() => {
+            if (user) {
+                navigate('/')
+            }
+        }, [user, navigate])
     // register account
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -48,7 +54,7 @@ const Register = () => {
             toast.error(error?.message)
         }
     }
-
+    if(user || loading) return 
     return (
         <div className='flex justify-center items-center py-10 md:py-20'>
             <div className='flex w-full max-w-sm mx-auto overflow-hidden bg-white rounded-lg shadow-lg lg:max-w-5xl border-2 p-2 border-neutral-300 '>
