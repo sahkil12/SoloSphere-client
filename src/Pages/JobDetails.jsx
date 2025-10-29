@@ -1,4 +1,4 @@
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useNavigate } from "react-router-dom";
 import useAuth from "../Auth/useAuth";
 import DatePicker from "react-datepicker";
 
@@ -10,6 +10,7 @@ import toast from "react-hot-toast";
 const JobDetails = () => {
     const { user } = useAuth()
     const job = useLoaderData()
+    const navigate = useNavigate()
     const [startDate, setStartDate] = useState(new Date());
 
     const handleFormSubmit = async (e) => {
@@ -21,10 +22,13 @@ const JobDetails = () => {
         if (price < parseInt(job.min_price)) {
             return toast.error('Offer More or at least equal to Minimum Price')
         }
+        if (price > parseInt(job.max_price)) {
+            return toast.error('Offer less or at least equal to Maximum Price')
+        }
         const email = e.target.email.value;
         const comment = e.target.comment.value;
         const deadline = startDate;
-        const status = 'pending'
+        const status = 'Pending'
         const category = job.category
         const title = job.title
         const jobId = job._id
@@ -37,6 +41,7 @@ const JobDetails = () => {
             const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/bid`, bidData)
             if(data.insertedId){
                 toast.success('Bid Successfully send')
+                navigate('/myBids')
             }
         } catch (error) {
            toast.error(error.message);

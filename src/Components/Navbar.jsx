@@ -12,7 +12,12 @@ const Navbar = () => {
                 </Link>
             </div>
             <div className='flex-none'>
-                {user ? <div className='dropdown dropdown-end z-50'>
+                {user ? <div className="flex items-center gap-3">
+                    <button className="btn h-fit w-fit font-bold py-1.5 px-5">
+                       <Link to={'/'}>Home</Link>
+                    </button>
+                    <div className='dropdown dropdown-end z-50'>
+                    
                     <div
                         tabIndex={0}
                         role='button'
@@ -46,12 +51,12 @@ const Navbar = () => {
                             <button onClick={logoutUser} className=' block text-center btn btn-primary text-base'>Logout</button>
                         </li>
                     </ul>
+                </div>
                 </div> : 
                 <ul className='menu menu-horizontal px-1 text-base font-semibold flex items-center'>
                     <li>
                        <Link to={'/'}>Home</Link>
                     </li>
-
                     <li>
                         <Link to={'/login'} className="btn ml-3 btn-primary px-6 text-base">Login</Link>
                     </li>
