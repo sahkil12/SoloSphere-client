@@ -1,23 +1,42 @@
-import { useEffect, useState } from 'react';
 import useAuth from '../Auth/useAuth';
 import toast from 'react-hot-toast';
 import Swal from 'sweetalert2';
 import { Link } from 'react-router-dom';
 import useAxiosSecure from '../Hooks/useAxiosSecure';
+import {  useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import Loader from '../Components/Loader';
 
 const MyPostedJobs = () => {
     const { user } = useAuth()
-    const [jobs, setJobs] = useState([])
+    // const [jobs, setJobs] = useState([])
     const axiosSecure = useAxiosSecure()
+    const queryClient = useQueryClient()
+    const { data: jobs = [], isLoading,  } = useQuery({
+        enabled: !!user?.email,
+        queryFn: async () => {
+            const res = await axiosSecure.get(`/jobs/${user?.email}`)
+            return res.data
+        },
+        queryKey: ['jobs', user?.email]
+    })
+    console.log(jobs);
 
-    useEffect(() => {
-       axiosSecure.get(`/jobs/${user?.email}`)
-            .then(data => setJobs(data.data))
-            .catch(err => console.log(err))
-    }, [user, axiosSecure])
-    // delete job
+    const deleteMutation = useMutation({
+        mutationFn: async (id)=>{
+            const res = await axiosSecure.delete(`/job/${id}`)
+            return res.data
+        },
+        onSuccess: ()=>{
+            queryClient.invalidateQueries(['jobs', user?.email])
+            toast.success('Deleted Successfully')
+        },
+        onError: (error)=>{
+            toast.error(error.message)
+        }
+        
+    })
+
     const handleDelete = async (id) => {
-        try {
             Swal.fire({
                 title: "Are you sure?",
                 text: "You won't be able to revert this!",
@@ -28,24 +47,17 @@ const MyPostedJobs = () => {
                 confirmButtonText: "Yes, delete it!"
             }).then(async (result) => {
                 if (result.isConfirmed) {
-                    const { data } = await axiosSecure.delete(`/job/${id}`)
-                    if (data.deletedCount) {
-                        const filterJobs = jobs.filter(j => j._id !== id)
-                        setJobs(filterJobs)
-                        toast.success('Delete Successfully')
-                        Swal.fire({
+                    deleteMutation.mutate(id)
+                    Swal.fire({
                             title: "Deleted!",
                             text: "Your posted job has been deleted.",
                             icon: "success"
                         });
-                    }
                 }
             });
-        }
-        catch (error) {
-            toast.error(error.message)
-        }
     }
+
+    if (isLoading) return <Loader></Loader>
 
     return (
         <section className='container px-4 mx-auto pt-12'>
@@ -61,7 +73,7 @@ const MyPostedJobs = () => {
                 <div className='-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8'>
                     <div className='inline-block min-w-full py-2 align-middle md:px-6 lg:px-8'>
                         <div className='overflow-hidden border border-gray-400 md:rounded-lg'>
-                            <table className='min-w-full divide-y divide-gray-200'>
+                            <table className='min-w-full divide-y divide-gray-300'>
                                 <thead className='bg-gray-200'>
                                     <tr className=''>
                                         <th
