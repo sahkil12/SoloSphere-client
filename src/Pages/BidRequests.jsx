@@ -2,25 +2,23 @@ import { useEffect, useState } from "react";
 import useAuth from "../Auth/useAuth";
 import { useNavigation } from "react-router-dom";
 import Loader from "../Components/Loader";
-import axios from "axios";
+import useAxiosSecure from "../Hooks/useAxiosSecure";
 
 const BidRequests = () => {
     const { user } = useAuth()
     const [bids, setBids] = useState([])
     const navigation = useNavigation()
+    const axiosSecure = useAxiosSecure()
 
     useEffect(() => {
-        fetch(`${import.meta.env.VITE_API_URL}/bid-requests/${user?.email}`)
-            .then(res => res.json())
-            .then(data => setBids(data))
-    }, [user])
-    console.log(bids);
-
+        axiosSecure.get(`/bid-requests/${user?.email}`)
+            .then(result => setBids(result.data))
+    }, [user, axiosSecure])
+    // handle status
     const handleStatus = (id, prevStatus, status) => {
         if (prevStatus === status) return
-        console.log(id, prevStatus, status);
         // 
-        axios.patch(`${import.meta.env.VITE_API_URL}/bidUpdate/${id}`, { status })
+        axiosSecure.patch(`/bidUpdate/${id}`, { status })
             .then(result => {
                 if (result.data.modifiedCount > 0) {
                     setBids(bids =>
@@ -30,6 +28,7 @@ const BidRequests = () => {
                     );
                 }
             })
+            .catch(err => console.log(err))
     }
 
     if (navigation.state === 'loading') return <Loader></Loader>
@@ -139,11 +138,11 @@ const BidRequests = () => {
                                                 ${bid.status === 'Complete' && 'bg-emerald-100/60 text-emerald-500'}
                                                 ${bid.status === 'Rejected' && 'bg-red-100/60 text-red-500'}
                                                     `}>
-                                                    <span className={`h-1.5 w-1.5 rounded-full bg-yellow-500 
-                                                         ${bid.status === 'Pending' && 'bg-yellow-100/60 text-yellow-500'}
-                                                ${bid.status === 'In Progress' && 'bg-blue-100/60 text-blue-500'}
-                                                ${bid.status === 'Complete' && 'bg-emerald-100/60 text-emerald-500'}
-                                                ${bid.status === 'Rejected' && 'bg-red-100/60 text-red-500'}
+                                                    <span className={`h-1.5 w-1.5 rounded-full
+                                                         ${bid.status === 'Pending' && 'bg-yellow-600/60 text-yellow-500'}
+                                                ${bid.status === 'In Progress' && 'bg-blue-600/60 text-blue-500'}
+                                                ${bid.status === 'Complete' && 'bg-emerald-600/60 text-emerald-500'}
+                                                ${bid.status === 'Rejected' && 'bg-red-600/60 text-red-500'}
                                                         `}></span>
                                                     <h2 className={`text-base font-bold `}>{bid.status}</h2>
                                                 </div>

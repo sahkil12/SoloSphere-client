@@ -1,19 +1,20 @@
 import { useEffect, useState } from 'react';
 import useAuth from '../Auth/useAuth';
-import axios from 'axios';
 import toast from 'react-hot-toast';
 import Swal from 'sweetalert2';
 import { Link } from 'react-router-dom';
+import useAxiosSecure from '../Hooks/useAxiosSecure';
 
 const MyPostedJobs = () => {
     const { user } = useAuth()
     const [jobs, setJobs] = useState([])
+    const axiosSecure = useAxiosSecure()
 
     useEffect(() => {
-        fetch(`${import.meta.env.VITE_API_URL}/jobs/${user?.email}`)
-            .then(res => res.json())
-            .then(data => setJobs(data))
-    }, [user])
+       axiosSecure.get(`/jobs/${user?.email}`)
+            .then(data => setJobs(data.data))
+            .catch(err => console.log(err))
+    }, [user, axiosSecure])
     // delete job
     const handleDelete = async (id) => {
         try {
@@ -27,7 +28,7 @@ const MyPostedJobs = () => {
                 confirmButtonText: "Yes, delete it!"
             }).then(async (result) => {
                 if (result.isConfirmed) {
-                    const { data } = await axios.delete(`${import.meta.env.VITE_API_URL}/job/${id}`)
+                    const { data } = await axiosSecure.delete(`/job/${id}`)
                     if (data.deletedCount) {
                         const filterJobs = jobs.filter(j => j._id !== id)
                         setJobs(filterJobs)
@@ -108,7 +109,7 @@ const MyPostedJobs = () => {
                                 </thead>
                                 <tbody className='bg-white divide-y divide-gray-200 '>
                                     {
-                                        jobs?.map(job => <tr key={job._id}>
+                                        jobs.map(job => <tr key={job._id}>
                                             <td className='px-4 py-4 text-sm text-gray-500  whitespace-nowrap'>
                                                 {job.title}
                                             </td>
@@ -125,7 +126,7 @@ const MyPostedJobs = () => {
                                                     <p
                                                         className={`px-3 py-1 rounded-full text-xs
                                                           ${job.category === 'Web Development' && 'text-blue-500 bg-blue-100/75'}  
-                                                          ${job.category === 'Graphics Design' && 'text-emerald-500 bg-emerald-100/60' }
+                                                          ${job.category === 'Graphics Design' && 'text-emerald-500 bg-emerald-100/60'}
                                                           ${job.category === 'Digital Marketing' && 'text-pink-500 bg-pink-100/60'}
                                                             `}
                                                     >

@@ -2,18 +2,34 @@ import { useEffect, useState } from "react";
 import useAuth from "../Auth/useAuth";
 import { useNavigation } from "react-router-dom";
 import Loader from "../Components/Loader";
+import useAxiosSecure from "../Hooks/useAxiosSecure";
 
 const MyBids = () => {
     const { user } = useAuth()
     const [bids, setBids] = useState([])
     const navigation = useNavigation()
+    const axiosSecure = useAxiosSecure()
 
     useEffect(() => {
-        fetch(`${import.meta.env.VITE_API_URL}/myBids/${user?.email}`)
-            .then(res => res.json())
-            .then(data => setBids(data))
-    }, [user])
-    console.log(bids);
+        axiosSecure.get(`/myBids/${user?.email}`)
+            .then(result => setBids(result.data))
+            .catch(err => console.log(err))
+    }, [user, axiosSecure])
+    // handle status
+    const handleStatus = (id, status) => {
+        // update status
+        axiosSecure.patch(`/bidUpdate/${id}`, { status })
+            .then(result => {
+                if (result.data.modifiedCount > 0) {
+                    setBids(bids =>
+                        bids.map(bid =>
+                            bid._id === id ? { ...bid, status } : bid
+                        )
+                    );
+                }
+            })
+            .catch(err => { console.log(err) })
+    }
     if (navigation.state === 'loading') return <Loader></Loader>
     return (
         <section className='container px-4 mx-auto pt-12'>
@@ -110,17 +126,19 @@ const MyBids = () => {
                                                 ${bid.status === 'Complete' && 'bg-emerald-100/60 text-emerald-500'}
                                                 ${bid.status === 'Rejected' && 'bg-red-100/60 text-red-500'}
                                                 `}>
-                                                    <span className={`h-1.5 w-1.5 rounded-full bg-yellow-500 
-                                                 ${bid.status === 'Pending' && 'bg-yellow-100/60'}
-                                                     ${bid.status === 'In Progress' && 'bg-blue-100/60 '}
-                                                ${bid.status === 'Complete' && 'bg-emerald-100/60 '}
-                                                ${bid.status === 'Rejected' && 'bg-red-100/60 '}
+                                                    <span className={`h-1.5 w-1.5 rounded-full
+                                                 ${bid.status === 'Pending' && 'bg-yellow-600/60'}
+                                                     ${bid.status === 'In Progress' && 'bg-blue-600/60 '}
+                                                ${bid.status === 'Complete' && 'bg-emerald-600/60 '}
+                                                ${bid.status === 'Rejected' && 'bg-red-600/60 '}
                                                     `}></span>
                                                     <h2 className='text-base font-bold '>{bid.status}</h2>
                                                 </div>
                                             </td>
                                             <td className='px-4 py-4 text-sm whitespace-nowrap'>
                                                 <button
+                                                    disabled={bid.status !== 'In Progress'}
+                                                    onClick={() => handleStatus(bid._id, 'Complete')}
                                                     title='Mark Complete'
                                                     className='text-gray-500 transition-colors duration-200   hover:text-red-500 focus:outline-none disabled:cursor-not-allowed'
                                                 >

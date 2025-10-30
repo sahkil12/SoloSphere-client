@@ -27,7 +27,7 @@ const Login = () => {
         loginUser(email, password)
             .then(result => {
                 if (result) {
-                    toast.success('You Successfully login to SoloSphere')
+                    toast.success("You Successfully login to SoloSphere")
                     navigate(from, { replace: true })
                 }
             })
@@ -47,7 +47,7 @@ const Login = () => {
             toast.error(error?.message)
         }
     }
-    if(user || loading)return 
+    if (user || loading) return
     return (
         <div className='flex justify-center items-center py-20'>
             <div className='flex w-full max-w-md mx-auto overflow-hidden bg-white rounded-lg shadow-lg lg:max-w-5xl border-2 p-2 border-neutral-300'>
