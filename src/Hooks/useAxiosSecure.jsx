@@ -15,17 +15,14 @@ const useAxiosSecure = () => {
         return config
     },
         async (error) => {
-            console.log(error.response);
             if (error.response.status === 401 || error.response.status === 403) {
                 await logoutUser()
                 navigate('/login')
             }
             return Promise.reject(error)
         }
-
     )
-
-    axiosSecure.interceptors.response.use
+    // axiosSecure.interceptors.response.use
 
     return axiosSecure
 };

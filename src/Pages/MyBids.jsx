@@ -1,36 +1,41 @@
-import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import useAuth from "../Auth/useAuth";
-import { useNavigation } from "react-router-dom";
 import Loader from "../Components/Loader";
 import useAxiosSecure from "../Hooks/useAxiosSecure";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 const MyBids = () => {
     const { user } = useAuth()
-    const [bids, setBids] = useState([])
-    const navigation = useNavigation()
+    const queryClient = useQueryClient()
     const axiosSecure = useAxiosSecure()
 
-    useEffect(() => {
-        axiosSecure.get(`/myBids/${user?.email}`)
-            .then(result => setBids(result.data))
-            .catch(err => console.log(err))
-    }, [user, axiosSecure])
-    // handle status
+    const { data: bids = [], isLoading } = useQuery({
+        enabled: !!user?.email,
+        queryFn: async () => {
+            const res = await axiosSecure.get(`/myBids/${user?.email}`)
+            return res.data
+        },
+        queryKey: ['bid', user?.email]
+    })
+
+    const updateMutation = useMutation({
+        mutationFn: async ({ id, status }) => {
+            const res = await axiosSecure.patch(`/bidUpdate/${id}`, { status })
+            return res.data
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries(['bid', user?.email])
+            toast.success('bid work complete successfully')
+        },
+        onError: (error) => {
+            toast.error(error.message)
+        }
+    })
+
     const handleStatus = (id, status) => {
-        // update status
-        axiosSecure.patch(`/bidUpdate/${id}`, { status })
-            .then(result => {
-                if (result.data.modifiedCount > 0) {
-                    setBids(bids =>
-                        bids.map(bid =>
-                            bid._id === id ? { ...bid, status } : bid
-                        )
-                    );
-                }
-            })
-            .catch(err => { console.log(err) })
+        updateMutation.mutate({ id, status })
     }
-    if (navigation.state === 'loading') return <Loader></Loader>
+    if (isLoading) return <Loader></Loader>
     return (
         <section className='container px-4 mx-auto pt-12'>
             <div className='flex items-center gap-x-3'>

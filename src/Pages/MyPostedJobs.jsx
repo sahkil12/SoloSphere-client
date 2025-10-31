@@ -3,7 +3,7 @@ import toast from 'react-hot-toast';
 import Swal from 'sweetalert2';
 import { Link } from 'react-router-dom';
 import useAxiosSecure from '../Hooks/useAxiosSecure';
-import {  useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import Loader from '../Components/Loader';
 
 const MyPostedJobs = () => {
@@ -11,7 +11,7 @@ const MyPostedJobs = () => {
     // const [jobs, setJobs] = useState([])
     const axiosSecure = useAxiosSecure()
     const queryClient = useQueryClient()
-    const { data: jobs = [], isLoading,  } = useQuery({
+    const { data: jobs = [], isLoading, } = useQuery({
         enabled: !!user?.email,
         queryFn: async () => {
             const res = await axiosSecure.get(`/jobs/${user?.email}`)
@@ -19,42 +19,41 @@ const MyPostedJobs = () => {
         },
         queryKey: ['jobs', user?.email]
     })
-    console.log(jobs);
-
+    // delete system with tens stack query 
     const deleteMutation = useMutation({
-        mutationFn: async (id)=>{
+        mutationFn: async (id) => {
             const res = await axiosSecure.delete(`/job/${id}`)
             return res.data
         },
-        onSuccess: ()=>{
+        onSuccess: () => {
             queryClient.invalidateQueries(['jobs', user?.email])
             toast.success('Deleted Successfully')
         },
-        onError: (error)=>{
+        onError: (error) => {
             toast.error(error.message)
         }
-        
+
     })
 
     const handleDelete = async (id) => {
-            Swal.fire({
-                title: "Are you sure?",
-                text: "You won't be able to revert this!",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#3085d6",
-                cancelButtonColor: "#d33",
-                confirmButtonText: "Yes, delete it!"
-            }).then(async (result) => {
-                if (result.isConfirmed) {
-                    deleteMutation.mutate(id)
-                    Swal.fire({
-                            title: "Deleted!",
-                            text: "Your posted job has been deleted.",
-                            icon: "success"
-                        });
-                }
-            });
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                deleteMutation.mutate(id)
+                Swal.fire({
+                    title: "Deleted!",
+                    text: "Your posted job has been deleted.",
+                    icon: "success"
+                });
+            }
+        });
     }
 
     if (isLoading) return <Loader></Loader>

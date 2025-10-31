@@ -1,37 +1,40 @@
-import { useEffect, useState } from "react";
 import useAuth from "../Auth/useAuth";
-import { useNavigation } from "react-router-dom";
 import Loader from "../Components/Loader";
 import useAxiosSecure from "../Hooks/useAxiosSecure";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import toast from "react-hot-toast";
 
 const BidRequests = () => {
     const { user } = useAuth()
-    const [bids, setBids] = useState([])
-    const navigation = useNavigation()
+    const queryClient = useQueryClient()
     const axiosSecure = useAxiosSecure()
+    const { data: bids = [], isLoading } = useQuery({
+        enabled: !!user?.email,
+        queryFn: async () => {
+            const res = await axiosSecure.get(`/bid-requests/${user?.email}`)
+            return res.data
+        },
+        queryKey: ['bids', user?.email]
+    })
+    const updateMutation = useMutation({
+        mutationFn: async ({id, status}) => {
+            const res = await axiosSecure.patch(`/bidUpdate/${id}`,  {status} )
+            return res.data
+        },
+        onSuccess: ()=>{
+            queryClient.invalidateQueries(['bids', user?.email])
+            toast.success('bid status update successfully')
+        },
+        onError: (error)=>{
+            toast.error(error.message)
+        }
+    })
 
-    useEffect(() => {
-        axiosSecure.get(`/bid-requests/${user?.email}`)
-            .then(result => setBids(result.data))
-    }, [user, axiosSecure])
-    // handle status
-    const handleStatus = (id, prevStatus, status) => {
+    const handleStatus =(id, prevStatus, status) => {
         if (prevStatus === status) return
-        // 
-        axiosSecure.patch(`/bidUpdate/${id}`, { status })
-            .then(result => {
-                if (result.data.modifiedCount > 0) {
-                    setBids(bids =>
-                        bids.map(bid =>
-                            bid._id === id ? { ...bid, status } : bid
-                        )
-                    );
-                }
-            })
-            .catch(err => console.log(err))
+              updateMutation.mutate({id, status})
     }
-
-    if (navigation.state === 'loading') return <Loader></Loader>
+    if (isLoading) return <Loader></Loader>
     return (
         <section className='container px-4 mx-auto py-12'>
             <div className='flex items-center gap-x-3'>
@@ -103,8 +106,8 @@ const BidRequests = () => {
                                 </thead>
                                 <tbody className='bg-white divide-y divide-gray-300 '>
                                     {
-                                        bids.map(bid => <tr key={bid._id}>
-                                            <td className='px-4 py-4 text-sm text-gray-500  whitespace-nowrap'>
+                                        bids?.map(bid => <tr key={bid._id}>
+                                            <td className='px-4 py-4 text-sm text-gray-500 whitespace-nowrap'>
                                                 {bid.title}
                                             </td>
                                             <td className='px-4 py-4 text-sm text-gray-500  whitespace-nowrap'>
