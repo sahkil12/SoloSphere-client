@@ -1,36 +1,46 @@
 import { useEffect, useState } from "react";
 import JobCard from "../Components/JobCard";
+import { useNavigation } from "react-router-dom";
+import Loader from "../Components/Loader";
 
 const Jobs = () => {
     const [jobs, setJobs] = useState([])
+    const [filter, setFilter] = useState('')
     const [itemsPerPage, setItemsPerPage] = useState(8)
     const [currentPage, setCurrentPage] = useState(1)
     const [count, setCount] = useState(0)
+    const navigation = useNavigation()
     useEffect(() => {
-        fetch(`${import.meta.env.VITE_API_URL}/all-jobs?page=${currentPage}&size=${itemsPerPage}`)
+        fetch(`${import.meta.env.VITE_API_URL}/all-jobs?page=${currentPage}&size=${itemsPerPage}&filter=${filter}`)
             .then(res => res.json())
             .then(data => {
                 setJobs(data)
             })
-    }, [currentPage, itemsPerPage])
+    }, [currentPage, itemsPerPage, filter])
     useEffect(() => {
-        fetch(`${import.meta.env.VITE_API_URL}/jobs-count`)
+        fetch(`${import.meta.env.VITE_API_URL}/jobs-count?&filter=${filter}`)
             .then(res => res.json())
             .then(data => {
                 setCount(data.count)
             })
-    }, [])
+    }, [filter])
     const numberOfPages = Math.ceil(count / itemsPerPage)
     const pages = [...Array(numberOfPages).keys()].map(element => element + 1)
     const handlePagination = (value) => {
         setCurrentPage(value)
     }
+    if(navigation.state === 'loading') return <Loader></Loader>
     return (
         <div className='container px-6 py-10 mx-auto min-h-[calc(100vh-335px)] flex flex-col justify-between'>
             <div>
                 <div className='flex flex-col lg:flex-row justify-center items-center gap-5 '>
                     <div>
                         <select
+                            onChange={e => 
+                                (setFilter(e.target.value),
+                                setCurrentPage(1)
+                            )}
+                            value={filter}
                             name='category'
                             id='category'
                             className='border p-4 rounded-lg'
