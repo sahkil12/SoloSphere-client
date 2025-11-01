@@ -6,9 +6,11 @@ import "react-datepicker/dist/react-datepicker.css";
 import { useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
+import useAxiosSecure from "../Hooks/useAxiosSecure";
 
 const JobDetails = () => {
     const { user } = useAuth()
+    const axiosSecure = useAxiosSecure()
     const job = useLoaderData()
     const navigate = useNavigate()
     const [startDate, setStartDate] = useState(new Date());
@@ -38,18 +40,20 @@ const JobDetails = () => {
         }
         // bid post
         try {
-            const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/bid`, bidData)
-            if(data.insertedId){
+            const { data } = await axiosSecure.post(`/bid`, bidData)
+            if (data.insertedId) {
                 toast.success('Bid Successfully send')
                 navigate('/myBids')
+                 e.target.reset()
             }
         } catch (error) {
-           toast.error(error.message);
+            toast.error(error.response?.data);
+            e.target.reset()
         }
     }
 
     return (
-        <div className='flex flex-col md:flex-row justify-around gap-5  items-center min-h-[calc(100vh-306px)] md:max-w-screen-xl mx-auto py-10'>
+        <div className='flex flex-col lg:flex-row justify-around gap-5  items-center min-h-[calc(100vh-306px)] md:max-w-screen-xl mx-auto py-10'>
             {/* Job Details */}
             <div className='flex-1 p-6 bg-white rounded-md shadow-md md:min-h-[350px] border border-neutral-300'>
                 <div className='flex items-center justify-between'>

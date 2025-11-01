@@ -14,7 +14,7 @@ const SlideBanner = ({img, title, subtitle}) => {
                     {/* subtitle */}
                     <p className="mt-3 text-gray-400">{subtitle}</p>
                     {/* button */}
-                    <Link to={'/'} className="btn btn-primary px-5 py-6 mt-6 text-base tracking-wider  uppercase transition-colors duration-300 transform lg:w-auto hover:bg-primary/90 ">Post Job & Hire Expert</Link>
+                    <Link to={'/addJobs'} className="btn btn-primary px-5 py-6 mt-6 text-base tracking-wider  uppercase transition-colors duration-300 transform lg:w-auto hover:bg-primary/90 ">Post Job & Hire Expert</Link>
                 </div>
             </div>
 {/* img */}

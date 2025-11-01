@@ -17,7 +17,6 @@ const MyBids = () => {
         },
         queryKey: ['bid', user?.email]
     })
-
     const updateMutation = useMutation({
         mutationFn: async ({ id, status }) => {
             const res = await axiosSecure.patch(`/bidUpdate/${id}`, { status })
@@ -37,7 +36,7 @@ const MyBids = () => {
     }
     if (isLoading) return <Loader></Loader>
     return (
-        <section className='container px-4 mx-auto pt-12'>
+        <section className='container px-4 mx-auto py-12'>
             <div className='flex items-center gap-x-3'>
                 <h2 className='text-lg font-bold text-gray-800 '>My Bids</h2>
 

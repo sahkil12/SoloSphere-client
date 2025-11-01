@@ -1,15 +1,18 @@
 import { FaFacebook, FaGithub } from "react-icons/fa";
 import { ImLinkedin } from "react-icons/im";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
     return (
         <footer className='bg-white shadow-sm'>
-            <hr className="text-gray-300"/>
+            <hr className="text-gray-300" />
             <div className='container px-6 py-8 mx-auto'>
                 <div className='flex flex-col items-center text-center'>
                     <div className='flex gap-2 items-center'>
-                        <img className='w-auto h-7' src='/src/assets/images/logo.png' alt='' />
-                        <span className="text-2xl font-semibold">SoloSphere</span>
+                        <Link to={'/'} className='flex gap-2 items-center'>
+                            <img className='w-auto h-8' src='/src/assets/images/logo.png' alt='' />
+                            <span className='font-bold text-2xl'>SoloSphere</span>
+                        </Link>
                     </div>
 
                     <div className='flex flex-wrap justify-center mt-6 -mx-4 '>

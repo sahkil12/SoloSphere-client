@@ -154,10 +154,10 @@ const BidRequests = () => {
                                                 <div className='flex items-center gap-x-6'>
                                                     {/* accept */}
                                                     <button
+                                                        disabled={bid.status === 'Complete'}
                                                         onClick={() => {
                                                             handleStatus(bid._id, bid.status, 'In Progress')
                                                         }}
-                                                        disabled={bid.status === 'Complete'}
                                                         className='text-gray-500 transition-colors duration-200   hover:text-green-400 focus:outline-none'>
                                                         <svg
                                                             xmlns='http://www.w3.org/2000/svg'
@@ -174,7 +174,7 @@ const BidRequests = () => {
                                                             />
                                                         </svg>
                                                     </button>
-                                                    {/*  */}
+                                                    {/* reject */}
                                                     <button
                                                         onClick={() => {
                                                             handleStatus(bid._id, bid.status, 'Rejected')
