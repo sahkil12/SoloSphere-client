@@ -7,7 +7,7 @@ const Navbar = () => {
         <div className='navbar bg-base-200 py-5 shadow-md px-4'>
             <div className='flex-1'>
                 <Link to={'/'} className='flex gap-2 items-center'>
-                    <img className='w-auto h-8' src='/src/assets/images/logo.png' alt='' />
+                    <img className='w-auto h-8' src='/logo.png' alt='logo' />
                     <span className='font-bold text-2xl'>SoloSphere</span>
                 </Link>
             </div>

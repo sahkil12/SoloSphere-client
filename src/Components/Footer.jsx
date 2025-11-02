@@ -10,7 +10,7 @@ const Footer = () => {
                 <div className='flex flex-col items-center text-center'>
                     <div className='flex gap-2 items-center'>
                         <Link to={'/'} className='flex gap-2 items-center'>
-                            <img className='w-auto h-8' src='/src/assets/images/logo.png' alt='' />
+                            <img className='w-auto h-8' src='/logo.png' alt='logo' />
                             <span className='font-bold text-2xl'>SoloSphere</span>
                         </Link>
                     </div>
@@ -24,7 +24,7 @@ const Footer = () => {
                             {' '}
                             Home{' '}
                         </Link>
-                        
+
                         <Link
                             to={'/addJobs'}
                             className='mx-4 text-sm text-gray-600 transition-colors duration-300 hover:text-blue-500 '
