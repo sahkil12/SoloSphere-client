@@ -15,51 +15,49 @@ const Footer = () => {
                         </Link>
                     </div>
 
-                    <div className='flex flex-wrap justify-center mt-6 -mx-4 '>
-                        <a
-                            href='#'
+                    <div className='flex flex-wrap justify-center gap-3 sm:gap-1 mt-6 -mx-4 '>
+                        <Link
+                            to={'/'}
                             className='mx-4 text-sm text-gray-600 transition-colors duration-300 hover:text-blue-500 '
                             aria-label='Reddit'
                         >
                             {' '}
                             Home{' '}
-                        </a>
-
-                        <a
-                            href='#'
+                        </Link>
+                        
+                        <Link
+                            to={'/addJobs'}
                             className='mx-4 text-sm text-gray-600 transition-colors duration-300 hover:text-blue-500 '
                             aria-label='Reddit'
                         >
                             {' '}
-                            About{' '}
-                        </a>
-
-                        <a
-                            href='#'
+                            Add Jobs{' '}
+                        </Link>
+                        <Link
+                            to={'/myPostedJobs'}
                             className='mx-4 text-sm text-gray-600 transition-colors duration-300 hover:text-blue-500 '
                             aria-label='Reddit'
                         >
                             {' '}
-                            Teams{' '}
-                        </a>
-
-                        <a
-                            href='#'
+                            My Posted Jobs{' '}
+                        </Link>
+                        <Link
+                            to={'/myBids'}
                             className='mx-4 text-sm text-gray-600 transition-colors duration-300 hover:text-blue-500 '
                             aria-label='Reddit'
                         >
                             {' '}
-                            Privacy{' '}
-                        </a>
-
-                        <a
-                            href='#'
+                            My Bids{' '}
+                        </Link>
+                        <Link
+                            to={'/bidRequest'}
                             className='mx-4 text-sm text-gray-600 transition-colors duration-300 hover:text-blue-500 '
                             aria-label='Reddit'
                         >
                             {' '}
-                            Cookies{' '}
-                        </a>
+                            My Bid Request{' '}
+                        </Link>
+
                     </div>
                 </div>
 
