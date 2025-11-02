@@ -2,6 +2,7 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import JobCard from './JobCard';
 import { useEffect, useState } from 'react';
+import Loader from './Loader';
 
 const TabCategory = () => {
     const [jobs, setJobs] = useState([])
@@ -12,20 +13,20 @@ const TabCategory = () => {
                 setJobs(data)
             })
     }, [])
-
+    if (!jobs.length) return <Loader></Loader>
     return (
-        <Tabs>
-            <div className='w-11/12 px-6 py-10 mx-auto'>
-                <h1 className='text-3xl font-semibold text-center text-gray-800 capitalize lg:text-3xl '>
-                    Browse Jobs By Categories
-                </h1>
-                <p className='max-w-3xl mx-auto my-8 pb-12 text-base/relaxed text-center text-gray-500 '>
-                    Three categories available for the time being. They are Web
-                    Development, Graphics Design and Digital Marketing. Browse them by
-                    clicking on the tabs below.
-                </p>
+        <div className='w-11/12 px-6 py-10 mx-auto items-center'>
+            <h1 className='text-3xl font-semibold text-center text-gray-800 capitalize lg:text-3xl '>
+                Browse Jobs By Categories
+            </h1>
+            <p className='max-w-3xl mx-auto my-8 pb-12 text-base/relaxed text-center text-gray-500 '>
+                Three categories available for the time being. They are Web
+                Development, Graphics Design and Digital Marketing. Browse them by
+                clicking on the tabs below.
+            </p>
+            <Tabs>
                 <TabList>
-                    <div className='flex  items-center justify-center'>
+                    <div className='flex items-center justify-center'>
                         <Tab>Web Development</Tab>
                         <Tab>Graphics Design</Tab>
                         <Tab>Digital Marketing</Tab>
@@ -52,9 +53,9 @@ const TabCategory = () => {
                         }
                     </div>
                 </TabPanel>
+            </Tabs >
+        </div>
 
-            </div>
-        </Tabs >
     );
 };
 
