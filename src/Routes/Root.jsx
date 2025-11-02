@@ -22,9 +22,7 @@ export const router = createBrowserRouter([
         children: [
             {
                 index: true,
-                element: <Home></Home>,
-                loader: () => fetch(`${import.meta.env.VITE_API_URL}/jobs`),
-                hydrateFallbackElement:<Loader></Loader>
+                element: <Home></Home>
             },
             {
                 path: 'login',
@@ -37,8 +35,8 @@ export const router = createBrowserRouter([
             {
                 path: 'job/:id',
                 loader: ({ params }) => fetch(`${import.meta.env.VITE_API_URL}/job/${params.id}`),
-                element: <PrivateRoute><JobDetails></JobDetails></PrivateRoute> ,
-                hydrateFallbackElement:<Loader></Loader>
+                element: <PrivateRoute><JobDetails></JobDetails></PrivateRoute>,
+                hydrateFallbackElement: <Loader></Loader>
             },
             {
                 path: 'addJobs',
@@ -52,18 +50,18 @@ export const router = createBrowserRouter([
                 path: 'updateJobs/:id',
                 loader: ({ params }) => fetch(`${import.meta.env.VITE_API_URL}/job/${params.id}`),
                 element: <UpdateJobs></UpdateJobs>,
-                hydrateFallbackElement:<Loader></Loader>
+                hydrateFallbackElement: <Loader></Loader>
             },
             {
-                path:'myBids',
-                element:<PrivateRoute><MyBids></MyBids></PrivateRoute>
+                path: 'myBids',
+                element: <PrivateRoute><MyBids></MyBids></PrivateRoute>
             },
             {
                 path: 'bidRequest',
-                element:<PrivateRoute><BidRequests></BidRequests></PrivateRoute>
+                element: <PrivateRoute><BidRequests></BidRequests></PrivateRoute>
             },
             {
-                path:'jobs',
+                path: 'jobs',
                 element: <Jobs></Jobs>
             }
         ]

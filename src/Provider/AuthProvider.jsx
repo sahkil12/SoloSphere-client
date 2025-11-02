@@ -19,8 +19,7 @@ const AuthProvider = ({ children }) => {
   }
   const logoutUser = async () => {
     setLoading(true)
-    const { data } = axios(`${import.meta.env.VITE_API_URL}/logout`, {withCredentials:true})
-    console.log(data);
+    const { data } = axios(`${import.meta.env.VITE_API_URL}/logout`, { withCredentials: true })
     return signOut(auth);
   }
   const googleUser = () => {
@@ -36,7 +35,9 @@ const AuthProvider = ({ children }) => {
       setUser(currentUser);
       if (currentUser?.email) {
         axios.post(`${import.meta.env.VITE_API_URL}/jwt`, { email: currentUser.email }, { withCredentials: true })
-          .then(result => console.log(result.data))
+          .then(result => {
+            // console.log(result.data)
+          })
       }
       setLoading(false);
     })

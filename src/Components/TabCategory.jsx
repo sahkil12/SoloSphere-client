@@ -1,8 +1,18 @@
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import JobCard from './JobCard';
+import { useEffect, useState } from 'react';
 
-const TabCategory = ({ jobs }) => {
+const TabCategory = () => {
+    const [jobs, setJobs] = useState([])
+    useEffect(() => {
+        fetch(`${import.meta.env.VITE_API_URL}/jobs`)
+            .then(res => res.json())
+            .then(data => {
+                setJobs(data)
+            })
+    }, [])
+
     return (
         <Tabs>
             <div className='w-11/12 px-6 py-10 mx-auto'>
